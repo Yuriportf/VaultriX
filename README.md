@@ -1,4 +1,4 @@
-# 🚀 VaultX — Smart Financial Management System
+# 🚀 VaultriX — Smart Financial Management System
 
 VaultX é um sistema de gestão financeira focado em backend, projetado para ajudar usuários a rastrear, analisar e otimizar comportamentos de gastos por meio de processamento de dados estruturados e insights inteligentes.
 
