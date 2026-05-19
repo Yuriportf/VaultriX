@@ -1,1 +1,0 @@
-inicio = "inicialização do projeto"
