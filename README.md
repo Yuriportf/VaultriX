@@ -1,68 +1,73 @@
-# 🚀 VaultriX — Smart Financial Management System
+# 🚀 VaultriX — Smart Financial Intelligence System
 
-VaultX é um sistema de gestão financeira focado em backend, projetado para ajudar usuários a rastrear, analisar e otimizar comportamentos de gastos por meio de processamento de dados estruturados e insights inteligentes.
+VaultriX é uma plataforma de inteligência financeira baseada em **arquitetura modular**, projetada para a coleta, análise e previsão de comportamento financeiro. 
 
-O sistema é construído com ênfase em **Clean Architecture**, manipulação de dados **SQL-first** e design escalável, sendo ideal tanto como base para um produto real quanto para um portfólio técnico de alto nível.
-
----
-
-## 🎯 Propósito
-
-O VaultX visa:
-- Coletar dados financeiros (manuais ou importados).
-- Categorizar transações de forma inteligente.
-- Fornecer análises financeiras estruturadas.
-- Viabilizar planejamento baseado em metas.
-- Apoiar a tomada de decisão através de insights orientados a dados.
+O sistema opera sob uma filosofia **API-first**, garantindo integração fluida entre múltiplos clientes (Web, Mobile e integrações externas) e um backend robusto focado em processamento de dados.
 
 ---
 
-## 🧠 Conceitos Core
+## 🎯 Objetivo do Sistema
 
-Diferente de aplicações CRUD tradicionais, o VaultX é desenhado em torno de:
-- **Data Pipelines**: Fluxo contínuo de processamento de informação.
-- **Behavior Analysis**: Identificação de padrões de consumo.
-- **Financial Forecasting**: Previsão de saldo e gastos futuros.
-- **Goal-oriented Planning**: Sistema focado em objetivos financeiros.
-
----
-
-## 🏗️ Arquitetura
-
-O projeto segue uma **Layered Architecture** (Arquitetura em Camadas), separando responsabilidades de forma clara:
-
-- **Controllers**: Gerenciam requisições HTTP e respostas.
-- **Services**: Contêm a lógica de negócio e regras do sistema.
-- **Repositories**: Executam queries SQL puras (evitando dependência pesada de ORMs).
-- **Database**: PostgreSQL otimizado com índices e queries performáticas.
+O VaultriX foi desenvolvido para:
+- **Centralizar** dados financeiros de diversas fontes.
+- **Categorizar** transações de forma inteligente (automática e manual).
+- **Gerar análises** comportamentais de gastos.
+- **Projetar previsões** financeiras baseadas em histórico (Forecasting).
+- **Viabilizar planejamento** através de metas financeiras dinâmicas.
 
 ---
 
-## ⚙️ Tech Stack
+## 🧠 Conceitos Arquiteturais
 
-
-| Camada       | Tecnologia              |
-|--------------|-------------------------|
-| **Backend**  | Python + Django         |
-| **Database** | PostgreSQL (SQL-first)  |
-| **Infra**    | Docker + Docker Compose |
-| **API**      | Django REST Framework   |
+O sistema foge do padrão CRUD comum, focando em:
+- **Event-driven financial tracking**: Rastreamento baseado em eventos.
+- **Data pipelines**: Processamento estruturado de transações.
+- **Separação rígida**: Domínio e Infraestrutura totalmente desacoplados.
+- **Service Layer**: Centralização das regras de negócio.
+- **API-first design**: Backend independente de cliente.
 
 ---
 
-## 🗄️ Database Design
+## 🏗️ Arquitetura do Sistema
 
-Focado em performance e controle total sobre os dados.
+O VaultriX utiliza uma separação clara de responsabilidades:
 
-### Principais Entidades
-- `users`: Gestão de perfil e autenticação.
-- `transactions`: Registro detalhado de movimentações.
-- `categories`: Organização hierárquica de gastos.
-- `goals`: Planejamento e metas de economia.
+### 🔹 Backend (Django + DRF)
+- **API Layer**: Exposição de endpoints REST.
+- **Service Layer**: Orquestração das regras de negócio.
+- **Domain Layer**: Entidades e lógica financeira pura.
+- **Infrastructure Layer**: Acesso ao banco via SQL puro e Repositories.
 
-### Exemplo de Query (Gasto Mensal)
+### 🔹 Frontend & Mobile
+- **Web (Next.js)**: Interface responsiva com consumo via Axios.
+- **Mobile (React Native / Flutter)**: Cliente independente focado em UX rápida.
+
+---
+
+## ⚙️ Stack Tecnológica
+
+
+| Camada         | Tecnologia                       |
+|----------------|----------------------------------|
+| **Backend**    | Python + Django + DRF            |
+| **Database**   | PostgreSQL                       |
+| **Frontend**   | Next.js (React)                  |
+| **Mobile**     | React Native / Flutter           |
+| **Infra**      | Docker + Docker Compose          |
+
+---
+
+## 🗄️ Modelo de Dados (Resumo)
+
+Entidades principais:
+- `users`: Autenticação e perfil.
+- `transactions`: Movimentações financeiras detalhadas.
+- `categories`: Classificação e agrupamento de gastos.
+- `goals`: Metas e planejamento financeiro.
+
+### 📊 Exemplo de Query Financeira
 ```sql
-SELECT c.name, SUM(t.amount)
+SELECT c.name, SUM(t.amount) AS total
 FROM transactions t
 JOIN categories c ON t.category_id = c.id
 WHERE t.user_id = %s
@@ -72,27 +77,33 @@ GROUP BY c.name;
 
 ---
 
-## 🔄 Fluxo de Dados (Sequence Diagram)
-
-Abaixo, o fluxo simplificado de criação de uma transação:
+## 🔄 Fluxo de Operação (Sequence Diagram)
 
 ```mermaid
 sequenceDiagram
-    participant User
-    participant Controller
-    participant Service
-    participant Repository
-    participant Database
+    participant U as User
+    participant C as Web/Mobile
+    participant A as API (Controller)
+    participant S as Service Layer
+    participant R as Repository
+    participant D as Database
 
-    User->>Controller: POST /transactions
-    Controller->>Service: Valida e processa dados
-    Service->>Service: Categoriza transação
-    Service->>Repository: Salva transação (SQL)
-    Repository->>Database: INSERT INTO transactions
-    Database-->>Repository: OK
-    Repository-->>Service: Transaction saved
-    Service-->>Controller: Success response
-    Controller-->>User: 201 Created
+    U->>C: Create transaction
+    C->>A: POST /transactions
+    A->>S: Validate + process
+    S->>S: Categorize transaction
+    S->>R: Persist data (SQL)
+    R->>D: INSERT transaction
+    D-->>R: OK
+    R-->>S: Success
+    S-->>A: Response DTO
+    A-->>C: 201 Created
 ```
 
 ---
+
+## 🚀 Como Iniciar
+
+1. **Clone o repositório**
+2. **Configure o ambiente**: `docker-compose up --build`
+3. **Acesse a documentação**: `http://localhost:8000/docs/`
