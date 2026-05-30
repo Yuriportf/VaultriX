@@ -1,83 +1,50 @@
 # 🚀 VaultriX — Smart Financial Intelligence System
 
-VaultriX é uma plataforma de inteligência financeira baseada em **arquitetura modular**, projetada para a coleta, análise e previsão de comportamento financeiro. 
-
-O sistema opera sob uma filosofia **API-first**, garantindo integração fluida entre múltiplos clientes (Web, Mobile e integrações externas) e um backend robusto focado em processamento de dados.
+VaultriX é uma plataforma de inteligência financeira com arquitetura modular e abordagem **API-first**, focada em coleta, análise e previsão de dados financeiros.
 
 ---
 
-## 🎯 Objetivo do Sistema
-
-O VaultriX foi desenvolvido para:
-- **Centralizar** dados financeiros de diversas fontes.
-- **Categorizar** transações de forma inteligente (automática e manual).
-- **Gerar análises** comportamentais de gastos.
-- **Projetar previsões** financeiras baseadas em histórico (Forecasting).
-- **Viabilizar planejamento** através de metas financeiras dinâmicas.
+## 🎯 Objetivo
+- Centralizar dados financeiros  
+- Categorizar transações  
+- Gerar análises de gastos  
+- Realizar previsões (forecasting)  
+- Apoiar planejamento com metas  
 
 ---
 
-## 🧠 Conceitos Arquiteturais
+## 🏗️ Estrutura
 
-O sistema foge do padrão CRUD comum, focando em:
-- **Event-driven financial tracking**: Rastreamento baseado em eventos.
-- **Data pipelines**: Processamento estruturado de transações.
-- **Separação rígida**: Domínio e Infraestrutura totalmente desacoplados.
-- **Service Layer**: Centralização das regras de negócio.
-- **API-first design**: Backend independente de cliente.
+**Backend (Django + DRF)**
+- API Layer  
+- Service Layer  
+- Domain Layer  
+- Infrastructure Layer  
 
----
-
-## 🏗️ Arquitetura do Sistema
-
-O VaultriX utiliza uma separação clara de responsabilidades:
-
-### 🔹 Backend (Django + DRF)
-- **API Layer**: Exposição de endpoints REST.
-- **Service Layer**: Orquestração das regras de negócio.
-- **Domain Layer**: Entidades e lógica financeira pura.
-- **Infrastructure Layer**: Acesso ao banco via SQL puro e Repositories.
-
-### 🔹 Frontend & Mobile
-- **Web (Next.js)**: Interface responsiva com consumo via Axios.
-- **Mobile (React Native / Flutter)**: Cliente independente focado em UX rápida.
+**Frontend & Mobile**
+- Web: Next.js  
+- Mobile: React Native / Flutter  
 
 ---
 
-## ⚙️ Stack Tecnológica
-
-
-| Camada         | Tecnologia                       |
-|----------------|----------------------------------|
-| **Backend**    | Python + Django + DRF            |
-| **Database**   | PostgreSQL                       |
-| **Frontend**   | Next.js (React)                  |
-| **Mobile**     | React Native / Flutter           |
-| **Infra**      | Docker + Docker Compose          |
+## ⚙️ Stack
+- Backend: Python + Django + DRF  
+- Database: PostgreSQL  
+- Frontend: Next.js  
+- Mobile: React Native / Flutter  
+- Infra: Docker  
 
 ---
 
-## 🗄️ Modelo de Dados (Resumo)
-
-Entidades principais:
-- `users`: Autenticação e perfil.
-- `transactions`: Movimentações financeiras detalhadas.
-- `categories`: Classificação e agrupamento de gastos.
-- `goals`: Metas e planejamento financeiro.
-
-### 📊 Exemplo de Query Financeira
-```sql
-SELECT c.name, SUM(t.amount) AS total
-FROM transactions t
-JOIN categories c ON t.category_id = c.id
-WHERE t.user_id = %s
-AND DATE_TRUNC('month', t.date) = DATE_TRUNC('month', CURRENT_DATE)
-GROUP BY c.name;
-```
+## 🗄️ Dados (Resumo)
+- `users`  
+- `transactions`  
+- `categories`  
+- `goals`  
 
 ---
 
-## 🔄 Fluxo de Operação (Sequence Diagram)
+## 🔄 Fluxo
 
 ```mermaid
 sequenceDiagram
@@ -102,8 +69,9 @@ sequenceDiagram
 
 ---
 
-## 🚀 Como Iniciar
+## 🚀 Setup
+```bash
+docker-compose up --build
+```
 
-1. **Clone o repositório**
-2. **Configure o ambiente**: `docker-compose up --build`
-3. **Acesse a documentação**: `http://localhost:8000/docs/`
+Docs: http://localhost:8000/docs/
